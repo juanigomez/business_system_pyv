@@ -147,22 +147,19 @@ def Database():
 
         with inputs:
 
-            col1, col2, col3 = st.columns(3)
+            col1, col2 = st.columns(2)
 
             with col1:
 
                 Name = str(st.text_input("Nombre del producto: "))
                 Stock = st.slider("Cantidad", 1, 10)
+                Price = st.slider("Ingresa el precio: ", 1, 500, step = 10)
+
+            with col2:
 
                 materials_Dataset = get_Data('materials.csv')
                 all_Materials = list(materials_Dataset.iloc[:,0])
                 mat = st.selectbox("Selecciona el material principal: ", all_Materials)
-
-                decorations_Dataset = get_Data('decorations.csv')
-                all_Decorations = list(decorations_Dataset.iloc[:,0])
-                dec = st.multiselect("Selecciona las decoraciones: ", all_Decorations)
-
-            with col2:
 
                 if mat == "CUENCAS":
 
@@ -180,9 +177,9 @@ def Database():
 
                     color = [color1, color2, color3]
 
-            with col3:
-
-                Price = st.slider("Ingresa el precio: ", 1, 500, step = 10)
+                decorations_Dataset = get_Data('decorations.csv')
+                all_Decorations = list(decorations_Dataset.iloc[:,0])
+                dec = st.multiselect("Selecciona las decoraciones: ", all_Decorations)
 
         with button:
 
@@ -205,6 +202,7 @@ def Database():
                         df.loc[index, 'NOMBRE'] = Name
                         df.loc[index, 'STOCK'] = Stock
                         df.loc[index, 'MATERIAL'] = mat
+                        df.loc[index, 'COLOR'] = color
                         df.loc[index, 'DECORACION'] = dec
                         df.loc[index, 'PRECIO'] = Price
                         
@@ -214,7 +212,7 @@ def Database():
 
                 else:
 
-                    new_data = [[Name, Stock, mat, dec, Price]]
+                    new_data = [[Name, Stock, mat, color, dec, Price]]
                     df = pd.DataFrame(new_data)
                     df.to_csv('products.csv', mode='a', index=False, header=False)
 
