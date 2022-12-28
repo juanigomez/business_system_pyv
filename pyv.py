@@ -52,17 +52,17 @@ def Database():
         with inputs:
 
             Name = st.text_input("Nombre de la decoracion: ")
-            Amount = st.slider("Cantidad", 1, 100)
+            Amount = st.select_slider("Cantidad", ['poca', 'suficiente', 'mucha'])
 
         with button:
 
+            decorations_Dataset = get_Data('decorations.csv')
+            global all_Decorations
+            all_Decorations = list(decorations_Dataset.iloc[:,0])
+            index = get_Index(Name, all_Decorations)
+
             input_decoration_btn = st.button("Guardar")
             if input_decoration_btn:
-
-                decorations_Dataset = get_Data('decorations.csv')
-                global all_Decorations
-                all_Decorations = list(decorations_Dataset.iloc[:,0])
-                index = get_Index(Name, all_Decorations)
 
                 if Name == all_Decorations[index]:
 
@@ -101,17 +101,17 @@ def Database():
         with inputs:
 
             Name = st.text_input("Nombre del Material: ")
-            Amount = st.slider("Cantidad", 1, 100)
+            Amount = st.select_slider("Cantidad", ['poca', 'suficiente', 'mucha'])
 
         with button:
 
+            materials_Dataset = get_Data('materials.csv')
+            global all_Materials
+            all_Materials = list(materials_Dataset.iloc[:,0])
+            index = get_Index(Name, all_Materials)
+
             input_material_btn = st.button("Guardar")
             if input_material_btn:
-
-                materials_Dataset = get_Data('materials.csv')
-                global all_Materials
-                all_Materials = list(materials_Dataset.iloc[:,0])
-                index = get_Index(Name, all_Materials)
 
                 if Name == all_Materials[index]:
 
@@ -154,7 +154,7 @@ def Database():
             with col1:
 
                 Name = str(st.text_input("Nombre del producto: "))
-                Stock = st.slider("Cantidad")
+                Stock = st.slider("Cantidad", 1, 10)
                 mat = st.selectbox("Selecciona el material principal: ", all_Materials)
                 dec = st.multiselect("Selecciona las decoraciones: ", all_Decorations)
 
@@ -182,12 +182,12 @@ def Database():
 
         with button:
 
+            products_Dataset = get_Data('products.csv')
+            all_Products = list(products_Dataset.iloc[:,0])
+            index = get_Index(Name, all_Products)
+
             input_product_btn = st.button("Guardar")
             if input_product_btn:
-
-                products_Dataset = get_Data('products.csv')
-                all_Products = list(products_Dataset.iloc[:,0])
-                index = get_Index(Name, all_Products)
 
                 if Name == all_Products[index]:
 
