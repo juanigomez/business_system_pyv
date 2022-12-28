@@ -57,7 +57,6 @@ def Database():
         with button:
 
             decorations_Dataset = get_Data('decorations.csv')
-            global all_Decorations
             all_Decorations = list(decorations_Dataset.iloc[:,0])
             index = get_Index(Name, all_Decorations)
 
@@ -106,7 +105,6 @@ def Database():
         with button:
 
             materials_Dataset = get_Data('materials.csv')
-            global all_Materials
             all_Materials = list(materials_Dataset.iloc[:,0])
             index = get_Index(Name, all_Materials)
 
@@ -155,7 +153,13 @@ def Database():
 
                 Name = str(st.text_input("Nombre del producto: "))
                 Stock = st.slider("Cantidad", 1, 10)
+
+                materials_Dataset = get_Data('materials.csv')
+                all_Materials = list(materials_Dataset.iloc[:,0])
                 mat = st.selectbox("Selecciona el material principal: ", all_Materials)
+
+                decorations_Dataset = get_Data('decorations.csv')
+                all_Decorations = list(decorations_Dataset.iloc[:,0])
                 dec = st.multiselect("Selecciona las decoraciones: ", all_Decorations)
 
             with col2:
